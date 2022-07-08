@@ -1,25 +1,33 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <h2>Welcome to your Eid treasure hunt</h2>
     <br>
-<h2> Answer the following question: Rwtrz pqdkt iwt ugxsvt </h2>
-
-    <form @submit.prevent>
-      <input @submit.prevent="checkGuess" v-model="userGuess" type="text" placeholder="Enter guess">
-      <button @click="checkGuess">Check Guess</button>
-    </form>
-    <p class="wrongGuess">You guess incorrectly</p>
+    <h2> Your challenge is to decode the following message: <strong> Rwtrz pqdkt iwt ugxsvt </strong> </h2>
+    <br>
+    <div class="container-sm">
+      <form @submit.prevent class="input-group mb-3">
+        <input @submit.prevent="checkGuess" v-model="userGuess" type="text" placeholder="Enter decoded message"
+          class="form-control">
+        <button @click="checkGuess" class="btn btn-outline-secondary">Check Guess</button>
+      </form>
+    </div>
+    <br>
     <template v-for="n in 3" v-bind:key="n.id">
-      <button @click="showHint(n)" :disabled="current_time < n*60"> Show hint #{{ n }} </button>
+      <button @click="showHint(n)" :disabled="current_time < n * 60" class="btn btn-primary"> Show hint #{{ n }}
+      </button>
     </template>
-    <div id="hintContainer">
-      <img v-if="hintToShow > -1" :src="getHintImagePath()" alt="hint">
+    <div id="hintContainer" class="container">
+      <img v-if="hintToShow > -1" :src="getHintImagePath()" alt="hint" class="figure-img img-fluid rounded w-25 p-3">
+      <figcaption class="figure-caption"> {{getHintCaption()}} </figcaption>
     </div>
   </div>
+  <br>
 </template>
 
 <script>
-const HINTS = ["julius-caesar.jpg", "cypher.webp", "age-of-empires.jpg"]
+const HINTS_IMAGE = ["julius-caesar.jpg", "cypher.webp", "age-of-empires.jpg"]
+const HINTS_CAPTION = ["This guy's title", "His last name", "You just need the first word of this one."]
 export default {
   name: 'HelloWorld',
   props: {
@@ -36,7 +44,7 @@ export default {
   },
   methods: {
     checkGuess() {
-      if (this.userGuess.toLowerCase() === 'above the fridge') {
+      if (this.userGuess.toLowerCase() === 'check above the fridge') {
         alert('You guessed correctly!')
       } else {
         alert('You guessed incorrectly!')
@@ -47,11 +55,16 @@ export default {
     },
     getHintImagePath() {
       if (this.hintToShow > -1) {
-        return require('../assets/' + HINTS[this.hintToShow - 1])
+        return require('../assets/' + HINTS_IMAGE[this.hintToShow - 1])
+      }
+    },
+    getHintCaption() {
+      if (this.hintToShow > -1) {
+        return HINTS_CAPTION[this.hintToShow]
       }
     }
   },
-  beforeUnmount(){
+  beforeUnmount() {
     // prevent memory leak
     clearInterval(this.interval)
   },
@@ -60,7 +73,7 @@ export default {
     // update the time every second
     this.interval = setInterval(() => {
       const cur_time = new Date()
-      this.current_time = Math.floor((cur_time - this.loaded_time)/1000)
+      this.current_time = Math.floor((cur_time - this.loaded_time) / 1000)
     }, 1000)
   }
 }
@@ -68,21 +81,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
 </style>

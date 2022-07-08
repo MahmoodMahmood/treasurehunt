@@ -1,6 +1,6 @@
 <template>
   <img alt="Vue logo" src="./assets/eid-mubarak.svg" class="hello-image">
-  <HelloWorld msg="Aboodi! Welcome to your Eid treasure hunt!"/>
+  <HelloWorld msg="Eid Mubarak Aboodi!"/>
 </template>
 
 <script>
