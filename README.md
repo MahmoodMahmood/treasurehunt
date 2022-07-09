@@ -1,4 +1,5 @@
 # treasurehunt
+Currently hosted on https://mahmoodmahmood.github.io/treasurehunt/
 
 ## Project setup
 ```
