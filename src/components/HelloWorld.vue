@@ -17,9 +17,11 @@
       <div class="row gx-5">
         <template v-for="n in 3" v-bind:key="n.id">
           <div class="col px-3">
-            <button @click="showHint(n)" :disabled="current_time < n * 60" class="btn btn-primary"> Show hint #{{ n
-            }}
-            </button>
+            <button @click="showHint(n)" :disabled="current_time < n * HINT_BLOCK_DURATION" class="btn btn-primary">
+              Show hint #{{ n
+              }}
+            </button> <span v-if="n * HINT_BLOCK_DURATION > current_time && (n - 1) * HINT_BLOCK_DURATION < current_time"
+              class="badge bg-secondary"> {{ n * HINT_BLOCK_DURATION - current_time }} </span>
           </div>
         </template>
       </div>
@@ -76,6 +78,7 @@ export default {
     clearInterval(this.interval)
   },
   created() {
+    this.HINT_BLOCK_DURATION = 90
     this.loaded_time = new Date()
     // update the time every second
     this.interval = setInterval(() => {
