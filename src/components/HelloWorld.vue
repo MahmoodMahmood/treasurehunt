@@ -13,13 +13,20 @@
       </form>
     </div>
     <br>
-    <template v-for="n in 3" v-bind:key="n.id">
-      <button @click="showHint(n)" :disabled="current_time < n * 60" class="btn btn-primary"> Show hint #{{ n }}
-      </button>
-    </template>
+    <div class="container-sm">
+      <div class="row gx-5">
+        <template v-for="n in 3" v-bind:key="n.id">
+          <div class="col px-3">
+            <button @click="showHint(n)" :disabled="current_time < n * 60" class="btn btn-primary"> Show hint #{{ n
+            }}
+            </button>
+          </div>
+        </template>
+      </div>
+    </div>
     <div id="hintContainer" class="container">
       <img v-if="hintToShow > -1" :src="getHintImagePath()" alt="hint" class="figure-img img-fluid rounded w-25 p-3">
-      <figcaption class="figure-caption"> {{getHintCaption()}} </figcaption>
+      <figcaption class="figure-caption"> {{ getHintCaption() }} </figcaption>
     </div>
   </div>
   <br>
@@ -27,7 +34,7 @@
 
 <script>
 const HINTS_IMAGE = ["julius-caesar.jpg", "cypher.webp", "age-of-empires.jpg"]
-const HINTS_CAPTION = ["This guy's title", "His last name", "You just need the first word of this one."]
+const HINTS_CAPTION = ["This guy's title", "His character name", "You just need the first word of this one."]
 export default {
   name: 'HelloWorld',
   props: {
@@ -60,7 +67,7 @@ export default {
     },
     getHintCaption() {
       if (this.hintToShow > -1) {
-        return HINTS_CAPTION[this.hintToShow]
+        return HINTS_CAPTION[this.hintToShow - 1]
       }
     }
   },
